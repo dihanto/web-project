@@ -15,7 +15,7 @@ func TestProductCreate(t *testing.T) {
 
 	ctx := context.Background()
 	product := entity.Product{
-		Name:     "Kabel panjang",
+		Name:     "Kabel panjanggggg",
 		Price:    20000,
 		Quantity: 12,
 	}
@@ -50,7 +50,7 @@ func TestProductUpdate(t *testing.T) {
 
 	ctx := context.Background()
 	product := entity.Product{
-		Name:     "Jauhhhh",
+		Name:     "Jauhdfdfhhh",
 		Price:    120000,
 		Quantity: 21,
 		ID:       1,
