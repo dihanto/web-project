@@ -1,9 +1,8 @@
 package controller
 
 import (
-	"encoding/json"
 	"net/http"
-	"text/template"
+	"strconv"
 
 	"github.com/dihanto/crud-web/entity"
 	"github.com/dihanto/crud-web/usecase"
@@ -20,31 +19,29 @@ func NewProductController(productUsecase usecase.ProductUsecase) *ProductControl
 }
 
 func (pc *ProductController) Create(writer http.ResponseWriter, request *http.Request) {
-
-	if request.Method == "GET" {
-		tmpl, err := template.ParseFiles("views/product/index.html")
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		err = tmpl.Execute(writer, nil)
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusInternalServerError)
-			return
-		}
-	} else if request.Method == "POST" {
-		products := &entity.Product{}
-		err := json.NewDecoder(request.Body).Decode(products)
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		err = pc.ProductUsecase.Create(request.Context(), products)
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		writer.WriteHeader(http.StatusCreated)
+	err := request.ParseForm()
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}
+
+	price, err := strconv.Atoi(request.FormValue("price"))
+	if err != nil {
+		panic(err)
+	}
+	quantity, err := strconv.Atoi(request.FormValue("quantity"))
+	if err != nil {
+		panic(err)
+	}
+
+	products := &entity.Product{
+		Name:     request.FormValue("name"),
+		Price:    float32(price),
+		Quantity: quantity,
+	}
+	err = pc.ProductUsecase.Create(request.Context(), products)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	writer.WriteHeader(http.StatusCreated)
 }

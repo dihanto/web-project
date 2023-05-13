@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -20,6 +21,8 @@ func main() {
 	pc := controller.NewProductController(pu)
 
 	r := router.NewRouter(pc)
+
+	fmt.Println("Server running")
 
 	server := &http.Server{
 		Addr:    "localhost:8080",
