@@ -59,7 +59,7 @@ func (pri *productRepositoryImpl) GetAll(ctx context.Context) (products []entity
 }
 
 func (pri *productRepositoryImpl) FindById(ctx context.Context, id int) (products []entity.Product, err error) {
-	script := `SELECT * FROM products WHERE id=?`
+	script := `SELECT id, name, price, quantity FROM products WHERE id=?`
 	rows, err := pri.Conn.QueryContext(ctx, script, id)
 	if err != nil {
 		return

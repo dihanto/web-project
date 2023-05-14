@@ -42,7 +42,8 @@ func (pu *productUsecaseImpl) GetAll(ctx context.Context) (products []entity.Pro
 func (pu *productUsecaseImpl) FindById(ctx context.Context, id int) (products []entity.Product, err error) {
 	ctx, cancel := context.WithTimeout(ctx, pu.contextTimeout)
 	defer cancel()
-	if _, err = pu.productRepo.FindById(ctx, id); err != nil {
+	products, err = pu.productRepo.FindById(ctx, id)
+	if err != nil {
 		return
 	}
 	return

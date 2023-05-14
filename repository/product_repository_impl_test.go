@@ -38,7 +38,7 @@ func TestFindById(t *testing.T) {
 
 	ctx := context.Background()
 
-	result, _ := productRepository.FindById(ctx, 1)
+	result, _ := productRepository.FindById(ctx, 3)
 	for _, p := range result {
 		fmt.Printf("ID: %d, Name: %s, Price: %0.1f, Quantity: %d\n", p.ID, p.Name, p.Price, p.Quantity)
 
