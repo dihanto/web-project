@@ -122,18 +122,18 @@ func (pc *ProductController) Update(writer http.ResponseWriter, request *http.Re
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}
-	price, err := strconv.Atoi(request.FormValue("price"))
+	price, err := strconv.Atoi(request.FormValue("price_update"))
 	if err != nil {
 		panic(err)
 	}
-	quantity, err := strconv.Atoi(request.FormValue("quantity"))
+	quantity, err := strconv.Atoi(request.FormValue("quantity_update"))
 	if err != nil {
 		panic(err)
 	}
 
 	products := &entity.Product{
 		ID:       int64(id),
-		Name:     request.FormValue("name"),
+		Name:     request.FormValue("name_update"),
 		Price:    float32(price),
 		Quantity: quantity,
 	}
@@ -150,7 +150,7 @@ func (pc *ProductController) Delete(writer http.ResponseWriter, request *http.Re
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}
-	id, err := strconv.Atoi(request.FormValue("id"))
+	id, err := strconv.Atoi(request.FormValue("id_delete"))
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}

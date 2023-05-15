@@ -1,18 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Add Product</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CRUD Product</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
 </head>
 <body>
-	<h1>Add Product</h1>
-	<form method="POST" action="/products">
-		<label for="name">Name:</label>
-		<input type="text" name="name" id="name"><br>
-		<label for="price">Price:</label>
-		<input type="text" name="price" id="price"><br>
-		<label for="quantity">Quantity:</label>
-		<input type="text" name="quantity" id="quantity"><br>
-		<input type="submit" value="Add">
-	</form>
+
+	<div class="container">
+		<h1 class="mt-5">CRUD Product</h1>
+
+		<!-- Form Add Product-->
+		<form method="POST" action="/product" class="mt-4">
+			<h2>Tambah Produk</h2>
+			<div class="mb-3">
+				<label for="name" class="form-label">Nama Produk:</label>
+				<input type="text" id="name" name="name" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="price" class="form-label">Harga:</label>
+				<input type="number" id="price" name="price" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="quantity" class="form-label">Jumlah:</label>
+				<input type="number" id="quantity" name="quantity" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary">Tambah</button>
+		</form>
+
+		<hr>
+
+
+		<!-- Form Edit Product -->
+		<form method="POST" action="/product" class="mt-5">
+			<h2>Update Product</h2>
+			<div class="mb-3">
+				<label for="id" class="form-label">ID Produk:</label>
+				<input type="text" id="id" name="id" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="name_update" class="form-label">Nama Produk:</label>
+				<input type="text" id="name_update" name="name_update" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="price_update" class="form-label">Harga:</label>
+				<input type="number" id="price_update" name="price_update" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label for="quantity_update" class="form-label">Jumlah:</label>
+				<input type="number" id="quantity_update" name="quantity_update" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary" id="update">Update</button>
+		</form>
+
+		<!-- Form Delete Product -->
+		<form method="POST" action="/product" class="mt-4">
+			<label for="id_delete" class="form-control">ID:</label>
+			<input type="text" name="id_delete" id="id_delete" class="form-control"><br>
+			<input type="submit" value="Delete" class="btn-primary">
+		</form>
+	
+	</div>
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html>	
