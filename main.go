@@ -22,7 +22,7 @@ func main() {
 
 	r := router.NewRouter(pc)
 
-	fmt.Println("Server running")
+	fmt.Println("Server running on port 8080")
 
 	server := &http.Server{
 		Addr:    "localhost:8080",

@@ -54,12 +54,29 @@
 			<button type="submit" class="btn btn-primary" id="update">Update</button>
 		</form>
 
+		<hr>
 		<!-- Form Delete Product -->
 		<form method="POST" action="/product" class="mt-4">
-			<label for="id_delete" class="form-control">ID:</label>
+			<label for="id_delete" class="form-label">ID:</label>
 			<input type="text" name="id_delete" id="id_delete" class="form-control"><br>
-			<input type="submit" value="Delete" class="btn-primary">
+			<input type="submit" value="Delete" class="btn btn-primary">
 		</form>
+	
+		<hr>
+
+		<a href="product/getall" class="btn btn-primary">Get All Product</a>
+		
+		<hr>
+
+		<form method="POST" action="/product" class="mt-3">
+			<div class="mb-3">
+				<label for="id_find" class="form-label">ID:</label>
+				<input type="text" name="id_find" id="id_find" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary">Find</button>
+		</form>
+		
+		<hr>
 	
 	</div>
 	

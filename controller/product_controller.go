@@ -45,6 +45,7 @@ func (pc *ProductController) Create(writer http.ResponseWriter, request *http.Re
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	successCreate(writer, request)
 	writer.WriteHeader(http.StatusCreated)
 }
 
@@ -55,19 +56,7 @@ func (pc *ProductController) GetAll(writer http.ResponseWriter, request *http.Re
 	}
 	writer.WriteHeader(http.StatusOK)
 
-	tmpl := `<html>
-	<head><title>Product</title></head>
-	<body>
-	  <table>
-		<tr><th>ID</th><th>Name</th><th>Price</th></tr>
-		{{range .}}
-		  <tr> <td>{{.ID}}</td><td>{{.Name}}</td><td>{{.Price}}</td>
-		  </tr>
-		{{end}}
-	  </table>
-	</body>
-  </html>`
-	t, err := template.New("product").Parse(tmpl)
+	t := template.Must(template.ParseFiles("./views/product/getall.html"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,7 +70,7 @@ func (pc *ProductController) FindById(writer http.ResponseWriter, request *http.
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}
-	id, err := strconv.Atoi(request.FormValue("id"))
+	id, err := strconv.Atoi(request.FormValue("id_find"))
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusBadRequest)
 	}
@@ -92,19 +81,7 @@ func (pc *ProductController) FindById(writer http.ResponseWriter, request *http.
 
 	writer.WriteHeader(http.StatusOK)
 
-	tmpl := `<html>
-	<head><title>Product</title></head>
-	<body>
-	  <table>
-		<tr><th>ID</th><th>Name</th><th>Price</th><th>Quantity</tr>
-		{{range .}}
-		  <tr> <td>{{.ID}}</td><td>{{.Name}}</td><td>{{.Price}}</td><td>{{.Quantity}}</td>
-		  </tr>
-		{{end}}
-	  </table>
-	</body>
-  </html>`
-	t, err := template.New("findbyid").Parse(tmpl)
+	t := template.Must(template.ParseFiles("./views/product/findbyidresult.html"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -143,6 +120,8 @@ func (pc *ProductController) Update(writer http.ResponseWriter, request *http.Re
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	successUpdate(writer, request)
 	writer.WriteHeader(http.StatusOK)
 }
 func (pc *ProductController) Delete(writer http.ResponseWriter, request *http.Request) {
@@ -159,5 +138,53 @@ func (pc *ProductController) Delete(writer http.ResponseWriter, request *http.Re
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
+
+	successDelete(writer, request)
+
 	writer.WriteHeader(http.StatusOK)
+}
+
+func successCreate(writer http.ResponseWriter, request *http.Request) {
+
+	tmpl, err := template.ParseFiles("views/product/successcreate.html")
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(writer, nil)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func successUpdate(writer http.ResponseWriter, request *http.Request) {
+
+	tmpl, err := template.ParseFiles("views/product/successupdate.html")
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(writer, nil)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func successDelete(writer http.ResponseWriter, request *http.Request) {
+
+	tmpl, err := template.ParseFiles("views/product/successdelete.html")
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(writer, nil)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
