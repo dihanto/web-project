@@ -1,11 +1,66 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <title>
-            Welcome to the club
-        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Product</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     </head>
-
     <body>
-        <h1>Welcome home brody</h1>
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Actions</th> <!-- New column for edit and delete buttons -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .}}
+                        <tr>
+                            <td>{{.ID}}</td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Price}}</td>
+                            <td>
+                                <button id="{{.ID}}" class="delete-button btn btn-danger" onclick="deleteRow(id)">Delete</button>
+                                <a href="/products/detail/{{.ID}}" class="btn btn-primary" target="_blank">Detail</a>
+                                <a href="/products/edit/{{.ID}}" class="btn btn-warning" target="_blank">Update</a>
+                            </td>
+                        </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            <hr>
+
+            <a href="/products/add" class="btn btn-success" data-endpoint="add" target="_blank">Tambah Produk</a>
+
+        </div>
+        
+        
+
+        <script>
+            function deleteRow(id) {
+                console.log(id);
+                // Send an AJAX request to the server to delete the row
+                fetch(`/products/${id}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                if (response.ok) {
+                    // Berhasil mengirim permintaan PUT
+                    alert("Produk berhasil dihapus!");
+                } else {
+                    // Gagal mengirim permintaan PUT
+                    alert("Gagal menghapus produk.");
+                }
+            })
+            .catch(error => {
+                console.error("Terjadi kesalahan:", error);
+            });
+            }
+        </script>
+
     </body>
 </html>

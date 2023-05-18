@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Produk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form action="/products/{{.ID}}" class="mt-5">
+            <h2>Update Product</h2>
+            <div class="mb-3">
+                <label for="name_update" class="form-label">Nama Produk:</label>
+                <input type="text" id="name_update" name="name_update" class="form-control" value="{{.Name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="price_update" class="form-label">Harga:</label>
+                <input type="number" id="price_update" name="price_update" class="form-control" value="{{.Price}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="quantity_update" class="form-label" >Jumlah:</label>
+                <input type="number" id="quantity_update" name="quantity_update" class="form-control" value="{{.Quantity}}" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="update">Update</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("update").addEventListener("click", function(event) {
+            event.preventDefault(); // Menghentikan aksi pengiriman formulir
+    
+            // Mendapatkan nilai-nilai input dari elemen-elemen formulir
+            var id = "{{.ID}}";
+            var name = document.getElementById("name_update").value;
+            var price = document.getElementById("price_update").value;
+            var quantity = document.getElementById("quantity_update").value;
+    
+            // Mengirim permintaan PUT menggunakan Fetch API
+            fetch(`/products/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    price: price,
+                    quantity: quantity
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Berhasil mengirim permintaan PUT
+                    alert("Produk berhasil diperbarui!");
+                } else {
+                    // Gagal mengirim permintaan PUT
+                    alert("Gagal memperbarui produk.");
+                }
+            })
+            .catch(error => {
+                console.error("Terjadi kesalahan:", error);
+            });
+        });
+    </script>
+
+    <hr>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
